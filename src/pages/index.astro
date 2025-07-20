@@ -15,7 +15,25 @@ Any page or data can be rebuilt only when needed, without site visitors ever get
     <ContextAlert class="mb-8" />
     <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
     <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <a href="/todos" class="btn btn-lg bg-blue-600 hover:bg-blue-700 text-white">
+            ✅ Todo Manager
+        </a>
+        <a href="/notes" class="btn btn-lg bg-green-600 hover:bg-green-700 text-white">
+            📋 Заметки
+        </a>
+        <a href="/calculator" class="btn btn-lg bg-purple-600 hover:bg-purple-700 text-white">
+            🧮 Калькулятор
+        </a>
+        <a href="/apps" class="btn btn-lg bg-gray-600 hover:bg-gray-700 text-white">
+            🚀 Все приложения
+        </a>
+    </div>
+    
+    <div class="text-center mt-8">
+        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">
+            📚 Read the Docs
+        </a>
+    </div>
 </Layout>
