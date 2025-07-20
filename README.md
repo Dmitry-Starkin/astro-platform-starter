@@ -1,51 +1,96 @@
-# Astro on Netlify Platform Starter
+# 📸 YouTube Screenshot Tool
 
-[Live Demo](https://astro-platform-starter.netlify.app/)
+Веб-приложение для создания чистых скриншотов YouTube видео без элементов управления.
 
-A modern starter based on Astro.js, Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blob Store).
+## ✨ Возможности
 
-## Astro Commands
+- 🎯 **Чистые скриншоты** - без кнопок воспроизведения и других элементов управления
+- 🕐 **Выбор времени** - точно выберите момент для скриншота с помощью ползунка
+- ⚡ **Быстрые кнопки** - мгновенные скриншоты в ключевых моментах (начало, 25%, 50%, 75%)
+- 📱 **Качество изображения** - выбор между различными разрешениями
+- 💾 **Легкое сохранение** - скачивание или копирование в буфер обмена
+- 🏷️ **Информативность** - автоматическое добавление временных меток и метаданных
 
-All commands are run from the root of the project, from a terminal:
+## 🚀 Быстрый старт
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+1. **Клонируйте репозиторий:**
+   ```bash
+   git clone <ваш-репозиторий>
+   cd youtube-screenshot-tool
+   ```
 
-## Deploying to Netlify
+2. **Установите зависимости:**
+   ```bash
+   npm install
+   ```
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-platform-starter)
+3. **Запустите сервер разработки:**
+   ```bash
+   npm run dev
+   ```
 
-## Developing Locally
+4. **Откройте в браузере:**
+   ```
+   http://localhost:4321
+   ```
 
-| Prerequisites                                                                |
-| :--------------------------------------------------------------------------- |
-| [Node.js](https://nodejs.org/) v18.14+.                                      |
-| (optional) [nvm](https://github.com/nvm-sh/nvm) for Node version management. |
+## 🎮 Как использовать
 
-1. Clone this repository, then run `npm install` in its root directory.
+1. **Вставьте ссылку** на YouTube видео в поле ввода
+2. **Выберите качество** скриншота (максимальное рекомендуется)
+3. **Выберите момент времени** одним из способов:
+   - Используйте ползунок для точного выбора
+   - Нажмите кнопки быстрого доступа (0%, 25%, 50%, 75%)
+4. **Создайте скриншот** нажав кнопку "Сделать скриншот"
+5. **Сохраните результат**:
+   - Скачайте как PNG файл
+   - Скопируйте в буфер обмена
 
-2. For the starter to have full functionality locally (e.g. edge functions, blob store), please ensure you have an up-to-date version of Netlify CLI. Run:
+## 🔧 Технологии
 
+- **Astro** - современный веб-фреймворк
+- **React** - для интерактивных компонентов
+- **TypeScript** - типизированный JavaScript
+- **Tailwind CSS** - для стилизации
+- **YouTube API** - для работы с видео
+- **Canvas API** - для создания скриншотов
+
+## 📋 Поддерживаемые форматы
+
+Приложение работает с любыми публичными YouTube видео по ссылкам вида:
+- `https://www.youtube.com/watch?v=VIDEO_ID`
+- `https://youtu.be/VIDEO_ID`
+- `https://www.youtube.com/embed/VIDEO_ID`
+
+## 🎨 Качество скриншотов
+
+- **Максимальное (1280x720)** - лучшее качество, рекомендуется
+- **Стандартное (640x480)** - хорошее качество
+- **Высокое (480x360)** - среднее качество
+- **Среднее (320x180)** - базовое качество
+
+## ⚠️ Ограничения
+
+- Скриншоты создаются на основе thumbnail изображений YouTube
+- Точность временных меток может варьироваться
+- Работает только с публичными видео
+- Требует подключение к интернету
+
+## 🚀 Сборка для продакшена
+
+```bash
+npm run build
+npm run preview
 ```
-npm install netlify-cli@latest -g
-```
 
-3. Link your local repository to the deployed Netlify site. This will ensure you're using the same runtime version for both local development and your deployed site.
+## 📝 Лицензия
 
-```
-netlify link
-```
+MIT License - свободно используйте для любых целей.
 
-4. Then, run the Astro.js development server via Netlify CLI:
+## 🤝 Вклад в развитие
 
-```
-netlify dev
-```
+Приветствуются любые улучшения! Создавайте issues и pull requests.
 
-If your browser doesn't navigate to the site automatically, visit [localhost:8888](http://localhost:8888).
+---
+
+**Создано с ❤️ для удобной работы с YouTube видео**
