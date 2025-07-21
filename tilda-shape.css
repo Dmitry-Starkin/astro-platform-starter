@@ -1,0 +1,94 @@
+/* CSS для фигуры с углами в Tilda */
+
+.angled-shape {
+  clip-path: polygon(
+    15% 0%,     /* верхний левый угол со срезом */
+    100% 0%,    /* верхний правый угол */
+    85% 100%,   /* нижний правый угол со срезом */
+    0% 100%,    /* нижний левый угол */
+    0% 25%      /* возврат к началу с углом */
+  );
+  position: relative;
+}
+
+/* Альтернативные варианты углов */
+
+/* Более мягкие углы */
+.angled-shape-soft {
+  clip-path: polygon(
+    10% 0%,
+    100% 0%,
+    90% 100%,
+    0% 100%,
+    0% 20%
+  );
+}
+
+/* Более острые углы */
+.angled-shape-sharp {
+  clip-path: polygon(
+    20% 0%,
+    100% 0%,
+    80% 100%,
+    0% 100%,
+    0% 30%
+  );
+}
+
+/* Асимметричные углы */
+.angled-shape-asymmetric {
+  clip-path: polygon(
+    10% 0%,
+    100% 0%,
+    90% 100%,
+    0% 100%,
+    0% 15%
+  );
+}
+
+/* Дополнительные стили для улучшения внешнего вида */
+.angled-shape-enhanced {
+  clip-path: polygon(
+    15% 0%,
+    100% 0%,
+    85% 100%,
+    0% 100%,
+    0% 25%
+  );
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.angled-shape-enhanced:hover {
+  transform: scale(1.02);
+}
+
+/* Версия с тенью */
+.angled-shape-shadow {
+  clip-path: polygon(
+    15% 0%,
+    100% 0%,
+    85% 100%,
+    0% 100%,
+    0% 25%
+  );
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* Для адаптивности на мобильных */
+@media (max-width: 768px) {
+  .angled-shape,
+  .angled-shape-soft,
+  .angled-shape-sharp,
+  .angled-shape-asymmetric,
+  .angled-shape-enhanced,
+  .angled-shape-shadow {
+    clip-path: polygon(
+      8% 0%,
+      100% 0%,
+      92% 100%,
+      0% 100%,
+      0% 15%
+    );
+  }
+}
