@@ -1,0 +1,87 @@
+.angled-shape {
+  width: 800px;
+  height: 400px;
+  background-color: #333;
+  border: 2px solid #fff;
+  clip-path: polygon(
+    15% 0%,     /* верхний левый угол со срезом */
+    100% 0%,    /* верхний правый угол */
+    85% 100%,   /* нижний правый угол со срезом */
+    0% 100%,    /* нижний левый угол */
+    0% 25%      /* возврат к началу с углом */
+  );
+  position: relative;
+  margin: 50px auto;
+}
+
+/* Альтернативный вариант с более мягкими углами */
+.angled-shape-soft {
+  width: 800px;
+  height: 400px;
+  background-color: #333;
+  border: 2px solid #fff;
+  clip-path: polygon(
+    10% 0%,
+    100% 0%,
+    90% 100%,
+    0% 100%,
+    0% 20%
+  );
+  position: relative;
+  margin: 50px auto;
+}
+
+/* Версия с градиентом */
+.angled-shape-gradient {
+  width: 800px;
+  height: 400px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid #fff;
+  clip-path: polygon(
+    15% 0%,
+    100% 0%,
+    85% 100%,
+    0% 100%,
+    0% 25%
+  );
+  position: relative;
+  margin: 50px auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Адаптивная версия */
+.angled-shape-responsive {
+  width: min(800px, 90vw);
+  height: min(400px, 45vw);
+  background-color: #333;
+  border: 2px solid #fff;
+  clip-path: polygon(
+    15% 0%,
+    100% 0%,
+    85% 100%,
+    0% 100%,
+    0% 25%
+  );
+  position: relative;
+  margin: 50px auto;
+}
+
+/* Контейнер для демонстрации */
+.shape-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  padding: 50px;
+  background-color: #1a1a1a;
+  min-height: 100vh;
+}
+
+/* Заголовки для примеров */
+.shape-title {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+}
