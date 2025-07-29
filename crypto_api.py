@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 from typing import Dict, List, Optional
 from config import Config
+import random
 
 class BybitAPI:
     """
@@ -15,7 +16,14 @@ class BybitAPI:
         self.session = None
     
     async def __aenter__(self):
-        self.session = aiohttp.ClientSession()
+        # Создаем сессию с куками и таймаутом
+        timeout = aiohttp.ClientTimeout(total=30)
+        connector = aiohttp.TCPConnector(limit=10)
+        self.session = aiohttp.ClientSession(
+            timeout=timeout,
+            connector=connector,
+            cookie_jar=aiohttp.CookieJar()
+        )
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -27,19 +35,29 @@ class BybitAPI:
         Получает все тикеры линейных контрактов с Bybit
         """
         try:
+            # Добавляем случайную задержку для имитации человека
+            await asyncio.sleep(random.uniform(1, 3))
+            
             # Используем эндпоинт для линейных контрактов (USDT фьючерсы)
             url = f"{self.base_url}/v5/market/tickers"
             params = {
                 'category': 'linear'  # Линейные контракты (USDT фьючерсы)
             }
             
+            # Максимально реалистичные заголовки браузера
             headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                'Accept': 'application/json',
-                'Accept-Language': 'en-US,en;q=0.9',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'application/json, text/plain, */*',
+                'Accept-Language': 'en-US,en;q=0.9,ru;q=0.8',
                 'Accept-Encoding': 'gzip, deflate, br',
+                'Referer': 'https://www.bybit.com/',
+                'Origin': 'https://www.bybit.com',
                 'Connection': 'keep-alive',
-                'Upgrade-Insecure-Requests': '1'
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'same-site',
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
             }
             
             print(f"🔄 Запрос к Bybit API: {url}")
@@ -110,7 +128,7 @@ class BybitAPI:
 # Функция для тестирования Bybit API
 async def test_bybit_api():
     """Тестовая функция для проверки работы Bybit API"""
-    print("🧪 Тестируем Bybit API...")
+    print("🧪 Тестируем Bybit API с улучшенными заголовками...")
     
     async with BybitAPI() as api:
         tickers = await api.get_all_tickers()
