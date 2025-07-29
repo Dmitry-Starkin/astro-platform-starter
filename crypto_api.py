@@ -5,6 +5,91 @@ from datetime import datetime
 from typing import Dict, List, Optional
 from config import Config
 
+class BinanceAPI:
+    """
+    Binance API - быстрый и надежный источник данных
+    """
+    def __init__(self):
+        self.base_url = "https://api.binance.com/api/v3"
+        self.session = None
+    
+    async def __aenter__(self):
+        self.session = aiohttp.ClientSession()
+        return self
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.session:
+            await self.session.close()
+    
+    async def get_all_tickers(self) -> Optional[List[Dict]]:
+        """
+        Получает все тикеры с Binance
+        """
+        try:
+            # Получаем данные о 24h статистике (включает цены и изменения)
+            url = f"{self.base_url}/ticker/24hr"
+            
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (compatible; CryptoBot/1.0)',
+                'Accept': 'application/json'
+            }
+            
+            print(f"Запрос к Binance API: {url}")
+            
+            async with self.session.get(url, headers=headers) as response:
+                print(f"Статус ответа Binance: {response.status}")
+                
+                if response.status == 200:
+                    data = await response.json()
+                    print(f"Получено {len(data)} тикеров с Binance")
+                    return self._process_binance_data(data)
+                else:
+                    response_text = await response.text()
+                    print(f"HTTP ошибка Binance {response.status}: {response_text[:300]}")
+                    return None
+                    
+        except Exception as e:
+            print(f"Ошибка при получении данных с Binance: {e}")
+            return None
+    
+    def _process_binance_data(self, tickers: List[Dict]) -> List[Dict]:
+        """
+        Обрабатывает данные тикеров с Binance
+        """
+        processed = []
+        
+        for ticker in tickers:
+            try:
+                symbol = ticker.get('symbol', '')
+                # Фильтруем только USDT пары
+                if not symbol.endswith('USDT'):
+                    continue
+                
+                last_price = float(ticker.get('lastPrice', 0))
+                price_change_percent = float(ticker.get('priceChangePercent', 0))
+                
+                # Пропускаем пары с нулевой ценой
+                if last_price == 0:
+                    continue
+                
+                processed_ticker = {
+                    'symbol': symbol,
+                    'name': symbol.replace('USDT', ''),  # Используем символ как имя
+                    'price': last_price,
+                    'change_24h_percent': round(price_change_percent, 2),
+                    'volume_24h': float(ticker.get('volume', 0)),
+                    'timestamp': datetime.now().isoformat(),
+                    'exchange_url': f"https://www.binance.com/en/trade/{symbol}"
+                }
+                
+                processed.append(processed_ticker)
+                
+            except (ValueError, TypeError) as e:
+                print(f"Ошибка обработки тикера Binance {ticker}: {e}")
+                continue
+        
+        return processed
+
 class CoinGeckoAPI:
     def __init__(self):
         self.base_url = "https://api.coingecko.com/api/v3"
@@ -178,6 +263,7 @@ class KrakenAPI:
                 
                 processed_pair = {
                     'symbol': symbol,
+                    'name': symbol.replace('USD', ''),
                     'price': last_price,
                     'change_24h_percent': round(change_24h_percent, 2),
                     'volume_24h': float(pair_data.get('v', [0])[1]),  # 24h объем
@@ -198,8 +284,20 @@ async def test_all_crypto_apis():
     """Тестовая функция для проверки работы всех API"""
     print("🔄 Тестируем все доступные криптовалютные API...")
     
-    # 1. Пробуем CoinGecko
-    print("\n1️⃣ Тестируем CoinGecko API...")
+    # 1. Пробуем Binance (новый приоритетный)
+    print("\n1️⃣ Тестируем Binance API...")
+    async with BinanceAPI() as api:
+        tickers = await api.get_all_tickers()
+        
+        if tickers:
+            print(f"✅ Binance: получено {len(tickers)} USDT пар")
+            print("Топ 5 пар:")
+            for ticker in tickers[:5]:
+                print(f"  {ticker['symbol']}: ${ticker['price']:.4f} ({ticker['change_24h_percent']:+.2f}%)")
+            return tickers, "Binance"
+    
+    # 2. Пробуем CoinGecko
+    print("\n2️⃣ Binance недоступен, тестируем CoinGecko API...")
     async with CoinGeckoAPI() as api:
         tickers = await api.get_all_tickers()
         
@@ -210,8 +308,8 @@ async def test_all_crypto_apis():
                 print(f"  {ticker['symbol']}: ${ticker['price']:.4f} ({ticker['change_24h_percent']:+.2f}%)")
             return tickers, "CoinGecko"
     
-    # 2. Пробуем Kraken
-    print("\n2️⃣ CoinGecko недоступен, тестируем Kraken API...")
+    # 3. Пробуем Kraken
+    print("\n3️⃣ CoinGecko недоступен, тестируем Kraken API...")
     async with KrakenAPI() as api:
         tickers = await api.get_all_tickers()
         
