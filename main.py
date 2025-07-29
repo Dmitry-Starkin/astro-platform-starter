@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Optional
 
 from config import Config
-from crypto_api import BybitAPI, CoinGeckoAPI  # Используем Bybit + CoinGecko как резерв
+from crypto_api import BybitAPI  # Используем только Bybit API
 from data_manager import DataManager
 from telegram_bot import CryptoTelegramBot
 
@@ -58,39 +58,25 @@ class CryptoPriceMonitor:
     
     async def _initialize_crypto_api(self):
         """
-        Инициализирует криптовалютный API с резервным источником
+        Инициализирует Bybit API
         """
-        print("🔍 Поиск доступного API...")
+        print("🔍 Инициализация Bybit API...")
         
-        # 1. Пробуем Bybit (приоритет)
+        # Используем только Bybit API как вы просили
+        self.crypto_api = BybitAPI
+        self.api_source = "Bybit"
+        
+        # Тестируем подключение
         try:
             async with BybitAPI() as api:
                 test_data = await api.get_all_tickers()
                 if test_data and len(test_data) > 0:
-                    self.crypto_api = BybitAPI
-                    self.api_source = "Bybit"
-                    print(f"✅ Bybit API подключен ({len(test_data)} USDT контрактов)")
-                    return
+                    print(f"✅ Bybit API работает ({len(test_data)} USDT контрактов)")
+                else:
+                    print("⚠️ Bybit API не вернул данные, но продолжаем попытки...")
         except Exception as e:
-            print(f"⚠️ Bybit недоступен: {e}")
-        
-        # 2. Пробуем CoinGecko как резерв для демонстрации
-        try:
-            async with CoinGeckoAPI() as api:
-                test_data = await api.get_all_tickers()
-                if test_data and len(test_data) > 0:
-                    self.crypto_api = CoinGeckoAPI
-                    self.api_source = "CoinGecko"
-                    print(f"✅ CoinGecko API подключен ({len(test_data)} криптовалют)")
-                    print("📝 Используем CoinGecko для демонстрации работы системы")
-                    return
-        except Exception as e:
-            print(f"⚠️ CoinGecko недоступен: {e}")
-        
-        # Если все API недоступны, используем Bybit по умолчанию (будет пытаться подключиться)
-        print("⚠️ Все API недоступны, устанавливаем Bybit по умолчанию...")
-        self.crypto_api = BybitAPI
-        self.api_source = "Bybit"
+            print(f"⚠️ Bybit API недоступен: {e}")
+            print("🔄 Бот будет пытаться подключиться каждые 3 минуты...")
     
     async def fetch_and_save_data(self) -> bool:
         """
