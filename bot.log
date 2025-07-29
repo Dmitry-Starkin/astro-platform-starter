@@ -1,0 +1,47 @@
+nohup: ignoring input
+🚀 Crypto Price Monitor Bot
+==================================================
+⏰ Интервал: 3 минут
+📈 Порог уведомлений: 2.0%
+💬 Telegram Chat ID: 89156628
+==================================================
+🚀 Инициализация Crypto Price Monitor...
+Подключение к боту успешно: @crypto_dump_pump_bot
+🔍 Инициализация Bybit API...
+Запрос к Bybit API: https://api.bybit.com/v5/market/tickers
+Параметры: {'category': 'linear'}
+Статус ответа Bybit: 403
+HTTP ошибка Bybit 403: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML><HEAD><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>ERROR: The request could not be satisfied</TITLE>
+</HEAD><BODY>
+<H1>403 ERROR</H1>
+<H2>The request could 
+❌ Bybit API вернул пустые данные
+⚠️ Bybit API недоступен, но продолжаем работу...
+🔄 Бот будет пытаться подключиться к Bybit во время мониторинга...
+✅ Инициализация завершена успешно
+🔄 Запуск мониторинга (интервал: 3 мин, порог: 2.0%)
+📡 Источник данных: Bybit
+
+==================================================
+📊 ПЕРВИЧНОЕ ПОЛУЧЕНИЕ ДАННЫХ
+==================================================
+📊 Получение данных с Bybit... (16:03:02)
+Запрос к Bybit API: https://api.bybit.com/v5/market/tickers
+Параметры: {'category': 'linear'}
+Статус ответа Bybit: 403
+HTTP ошибка Bybit 403: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML><HEAD><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>ERROR: The request could not be satisfied</TITLE>
+</HEAD><BODY>
+<H1>403 ERROR</H1>
+<H2>The request could 
+❌ Не удалось получить данные с Bybit
+⏰ Ожидание 3 минут до первого сравнения...
+
+🛑 Получен сигнал 15
+🛑 Остановка мониторинга...
+✅ Мониторинг остановлен
+🛑 Остановка мониторинга...
+✅ Мониторинг остановлен

@@ -1,51 +1,162 @@
-# Astro on Netlify Platform Starter
+# Crypto Price Monitor Bot
 
-[Live Demo](https://astro-platform-starter.netlify.app/)
+Telegram бот для мониторинга изменений цен криптовалют с автоматическим выбором лучшего доступного API.
 
-A modern starter based on Astro.js, Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blob Store).
+## 🚀 Функционал
 
-## Astro Commands
+- 📊 **Автоматический выбор API**: CoinGecko (приоритет) или Kraken (резерв)
+- ⏰ **Настраиваемый мониторинг**: интервалы от 1 минуты
+- 🔔 **Умные уведомления**: только при значительных изменениях цен
+- 📈 **Полная статистика**: цена, изменение %, объем, ссылки на биржи
+- 🛡️ **Надежность**: автоматическое восстановление после сбоев
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## Deploying to Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-platform-starter)
-
-## Developing Locally
-
-| Prerequisites                                                                |
-| :--------------------------------------------------------------------------- |
-| [Node.js](https://nodejs.org/) v18.14+.                                      |
-| (optional) [nvm](https://github.com/nvm-sh/nvm) for Node version management. |
-
-1. Clone this repository, then run `npm install` in its root directory.
-
-2. For the starter to have full functionality locally (e.g. edge functions, blob store), please ensure you have an up-to-date version of Netlify CLI. Run:
+## 📱 Пример уведомления
 
 ```
-npm install netlify-cli@latest -g
+🚀 РОСТ ЦЕНЫ
+
+Пара: BTCUSDT
+Изменение: +3.45%
+Цена: $42,150.25
+Период: 3 минуты
+Объем 24ч: 1.2M USDT
+
+📈 Торговать на CoinGecko
 ```
 
-3. Link your local repository to the deployed Netlify site. This will ensure you're using the same runtime version for both local development and your deployed site.
+## ⚡ Быстрый старт
+
+### 1. Подготовка
+
+```bash
+# Клонируйте репозиторий
+git clone <your-repo>
+cd crypto-price-monitor
+
+# Создайте Telegram бота
+# 1. Напишите @BotFather в Telegram
+# 2. Создайте бота: /newbot
+# 3. Получите токен бота
+```
+
+### 2. Настройка
+
+```bash
+# Скопируйте пример конфигурации
+cp .env.example .env
+
+# Отредактируйте .env файл:
+nano .env
+```
+
+**Обязательные настройки в .env:**
+```env
+TELEGRAM_BOT_TOKEN=ваш_токен_бота
+TELEGRAM_CHAT_ID=ваш_chat_id
+```
+
+### 3. Запуск
+
+```bash
+# Простой запуск
+./start_bot.sh
+
+# Или вручную
+source venv/bin/activate
+python3 main.py
+```
+
+## 🔧 Настройки
+
+В файле `.env` можно настроить:
+
+| Параметр | Описание | По умолчанию |
+|----------|----------|--------------|
+| `MONITORING_INTERVAL` | Интервал проверки (минуты) | 3 |
+| `PRICE_CHANGE_THRESHOLD` | Порог уведомлений (%) | 3.0 |
+| `TELEGRAM_BOT_TOKEN` | Токен Telegram бота | - |
+| `TELEGRAM_CHAT_ID` | ID чата для уведомлений | - |
+
+## 📊 Источники данных
+
+1. **Binance API** (приоритет, если доступен)
+   - ✅ Бесплатный
+   - ✅ Все USDT пары
+   - ⚠️ Может быть недоступен в некоторых регионах
+
+2. **CoinGecko API** (основной)
+   - ✅ Бесплатный
+   - ✅ 250 топ криптовалют
+   - ✅ Высокая надежность
+   - ✅ Доступен везде
+
+3. **Kraken API** (резерв)
+   - ✅ Бесплатный
+   - ✅ Основные торговые пары
+   - ✅ Стабильный доступ
+
+## 🛠️ Структура проекта
 
 ```
-netlify link
+crypto-price-monitor/
+├── main.py              # Основной файл
+├── crypto_api.py        # API для получения данных
+├── data_manager.py      # Управление данными
+├── telegram_bot.py      # Telegram бот
+├── config.py           # Конфигурация
+├── start_bot.sh        # Скрипт запуска
+├── requirements.txt    # Зависимости
+├── .env.example       # Пример настроек
+└── data/              # Файлы данных
+    ├── current_prices.json
+    └── previous_prices.json
 ```
 
-4. Then, run the Astro.js development server via Netlify CLI:
+## 🔍 Получение Chat ID
 
-```
-netlify dev
+Если вы не знаете свой Chat ID:
+
+1. Напишите боту любое сообщение
+2. Откройте в браузере:
+   ```
+   https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
+   ```
+3. Найдите `"chat":{"id":123456789}` - это ваш Chat ID
+
+## 🚨 Решение проблем
+
+### Бот не отправляет сообщения
+- Проверьте токен бота и Chat ID
+- Убедитесь, что написали боту первое сообщение
+
+### Нет данных о криптовалютах
+- Проверьте интернет соединение
+- API автоматически переключится на резервный источник
+
+### Слишком много/мало уведомлений
+- Измените `PRICE_CHANGE_THRESHOLD` в .env файле
+- Увеличьте `MONITORING_INTERVAL` для редких проверок
+
+## 📈 Мониторинг
+
+Бот выводит подробную информацию о своей работе:
+- ✅ Статус подключения к API
+- 📊 Количество отслеживаемых криптовалют  
+- 🔍 Найденные изменения цен
+- 📱 Статус отправки уведомлений
+
+## 🔄 Обновление
+
+```bash
+git pull origin main
+pip install -r requirements.txt
+./start_bot.sh
 ```
 
-If your browser doesn't navigate to the site automatically, visit [localhost:8888](http://localhost:8888).
+## 📝 Лицензия
+
+MIT License - используйте свободно для личных и коммерческих целей.
+
+---
+
+**💡 Совет**: Начните с порога 2-3% для получения умеренного количества уведомлений, затем настройте под свои потребности.
