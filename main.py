@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Crypto Price Monitor Bot
-Мониторинг изменений цен криптовалют на Bybit с уведомлениями в Telegram
+Мониторинг изменений цен криптовалют с уведомлениями в Telegram
 """
 
 import asyncio
@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Optional
 
 from config import Config
-from bybit_api import BybitAPI
+from crypto_api import CoinGeckoAPI, KrakenAPI  # Используем новые API
 from data_manager import DataManager
 from telegram_bot import CryptoTelegramBot
 
@@ -20,7 +20,8 @@ class CryptoPriceMonitor:
         self.running = False
         self.data_manager = DataManager()
         self.telegram_bot = None
-        self.bybit_api = None
+        self.crypto_api = None
+        self.api_source = None
         
         # Проверяем конфигурацию
         try:
@@ -45,8 +46,8 @@ class CryptoPriceMonitor:
                 print("❌ Ошибка подключения к Telegram")
                 return False
             
-            # Инициализируем Bybit API
-            self.bybit_api = BybitAPI()
+            # Инициализируем криптовалютный API
+            await self._initialize_crypto_api()
             
             print("✅ Инициализация завершена успешно")
             return True
@@ -55,18 +56,50 @@ class CryptoPriceMonitor:
             print(f"❌ Ошибка инициализации: {e}")
             return False
     
+    async def _initialize_crypto_api(self):
+        """
+        Инициализирует доступный криптовалютный API
+        """
+        print("🔍 Поиск доступного криптовалютного API...")
+        
+        # Пробуем CoinGecko
+        try:
+            async with CoinGeckoAPI() as api:
+                test_data = await api.get_all_tickers()
+                if test_data and len(test_data) > 0:
+                    self.crypto_api = CoinGeckoAPI
+                    self.api_source = "CoinGecko"
+                    print(f"✅ Используем CoinGecko API ({len(test_data)} криптовалют)")
+                    return
+        except Exception as e:
+            print(f"⚠️ CoinGecko недоступен: {e}")
+        
+        # Пробуем Kraken как резерв
+        try:
+            async with KrakenAPI() as api:
+                test_data = await api.get_all_tickers()
+                if test_data and len(test_data) > 0:
+                    self.crypto_api = KrakenAPI
+                    self.api_source = "Kraken"
+                    print(f"✅ Используем Kraken API ({len(test_data)} пар)")
+                    return
+        except Exception as e:
+            print(f"⚠️ Kraken недоступен: {e}")
+        
+        raise Exception("Ни один криптовалютный API недоступен")
+    
     async def fetch_and_save_data(self) -> bool:
         """
-        Получает данные с Bybit и сохраняет их
+        Получает данные с криптовалютного API и сохраняет их
         """
         try:
-            print(f"📊 Получение данных с Bybit... ({datetime.now().strftime('%H:%M:%S')})")
+            print(f"📊 Получение данных с {self.api_source}... ({datetime.now().strftime('%H:%M:%S')})")
             
-            async with self.bybit_api as api:
+            async with self.crypto_api() as api:
                 tickers = await api.get_all_tickers()
             
             if not tickers:
-                print("❌ Не удалось получить данные с Bybit")
+                print(f"❌ Не удалось получить данные с {self.api_source}")
                 return False
             
             # Ротируем данные (current -> previous)
@@ -123,6 +156,7 @@ class CryptoPriceMonitor:
         Основной цикл мониторинга
         """
         print(f"🔄 Запуск мониторинга (интервал: {Config.MONITORING_INTERVAL} мин, порог: {Config.PRICE_CHANGE_THRESHOLD}%)")
+        print(f"📡 Источник данных: {self.api_source}")
         
         # Первый запуск - только получаем данные
         print("\n" + "="*50)
@@ -191,7 +225,7 @@ class CryptoPriceMonitor:
         # Отправляем уведомление об остановке
         if self.telegram_bot:
             try:
-                stop_message = f"🛑 <b>Мониторинг остановлен</b>\n🕐 Время: {datetime.now().strftime('%H:%M:%S')}"
+                stop_message = f"🛑 <b>Мониторинг остановлен</b>\n📡 Источник: {self.api_source}\n🕐 Время: {datetime.now().strftime('%H:%M:%S')}"
                 await self.telegram_bot.send_status_message(stop_message)
             except:
                 pass  # Игнорируем ошибки при остановке
@@ -215,7 +249,6 @@ async def main():
     """
     print("🚀 Crypto Price Monitor Bot")
     print("="*50)
-    print(f"📊 Биржа: Bybit")
     print(f"⏰ Интервал: {Config.MONITORING_INTERVAL} минут")
     print(f"📈 Порог уведомлений: {Config.PRICE_CHANGE_THRESHOLD}%")
     print(f"💬 Telegram Chat ID: {Config.TELEGRAM_CHAT_ID}")

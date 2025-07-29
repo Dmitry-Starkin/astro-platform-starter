@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-07-29T15:28:54.416495",
+  "data": [
+    {
+      "symbol": "BTCUSDT",
+      "price": 43500.0,
+      "change_24h_percent": 5.8,
+      "volume_24h": 1200000,
+      "exchange_url": "https://example.com"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "price": 2480.0,
+      "change_24h_percent": -2.1,
+      "volume_24h": 480000,
+      "exchange_url": "https://example.com"
+    }
+  ],
+  "count": 2
+}
