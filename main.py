@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Optional
 
 from config import Config
-from crypto_api import BybitAPI, BinanceAPI, CoinGeckoAPI, KrakenAPI  # Используем новые API
+from crypto_api import BybitAPI  # Используем только Bybit API
 from data_manager import DataManager
 from telegram_bot import CryptoTelegramBot
 
@@ -58,59 +58,29 @@ class CryptoPriceMonitor:
     
     async def _initialize_crypto_api(self):
         """
-        Инициализирует доступный криптовалютный API
+        Инициализирует Bybit API
         """
-        print("🔍 Поиск доступного криптовалютного API...")
+        print("🔍 Инициализация Bybit API...")
         
-        # Пробуем Bybit (приоритет - linear контракты)
+        # Используем только Bybit (linear контракты)
         try:
             async with BybitAPI() as api:
                 test_data = await api.get_all_tickers()
                 if test_data and len(test_data) > 0:
                     self.crypto_api = BybitAPI
                     self.api_source = "Bybit"
-                    print(f"✅ Используем Bybit API ({len(test_data)} USDT контрактов)")
+                    print(f"✅ Bybit API подключен ({len(test_data)} USDT контрактов)")
                     return
+                else:
+                    print("❌ Bybit API вернул пустые данные")
         except Exception as e:
-            print(f"⚠️ Bybit недоступен: {e}")
+            print(f"❌ Ошибка подключения к Bybit API: {e}")
         
-        # Пробуем Binance
-        try:
-            async with BinanceAPI() as api:
-                test_data = await api.get_all_tickers()
-                if test_data and len(test_data) > 0:
-                    self.crypto_api = BinanceAPI
-                    self.api_source = "Binance"
-                    print(f"✅ Используем Binance API ({len(test_data)} USDT пар)")
-                    return
-        except Exception as e:
-            print(f"⚠️ Binance недоступен: {e}")
-        
-        # Пробуем CoinGecko
-        try:
-            async with CoinGeckoAPI() as api:
-                test_data = await api.get_all_tickers()
-                if test_data and len(test_data) > 0:
-                    self.crypto_api = CoinGeckoAPI
-                    self.api_source = "CoinGecko"
-                    print(f"✅ Используем CoinGecko API ({len(test_data)} криптовалют)")
-                    return
-        except Exception as e:
-            print(f"⚠️ CoinGecko недоступен: {e}")
-        
-        # Пробуем Kraken как резерв
-        try:
-            async with KrakenAPI() as api:
-                test_data = await api.get_all_tickers()
-                if test_data and len(test_data) > 0:
-                    self.crypto_api = KrakenAPI
-                    self.api_source = "Kraken"
-                    print(f"✅ Используем Kraken API ({len(test_data)} пар)")
-                    return
-        except Exception as e:
-            print(f"⚠️ Kraken недоступен: {e}")
-        
-        raise Exception("Ни один криптовалютный API недоступен")
+        # Если Bybit недоступен, продолжаем работу (возможно, API временно недоступен)
+        print("⚠️ Bybit API недоступен, но продолжаем работу...")
+        print("🔄 Бот будет пытаться подключиться к Bybit во время мониторинга...")
+        self.crypto_api = BybitAPI
+        self.api_source = "Bybit"
     
     async def fetch_and_save_data(self) -> bool:
         """
