@@ -189,10 +189,7 @@ class CryptoTelegramBot:
             bot_info = await self.bot.get_me()
             print(f"Подключение к боту успешно: @{bot_info.username}")
             
-            # Отправляем тестовое сообщение
-            test_message = f"🤖 <b>Бот запущен!</b>\n\n⏰ Интервал мониторинга: {Config.MONITORING_INTERVAL} мин\n📊 Порог уведомлений: {Config.PRICE_CHANGE_THRESHOLD}%\n🕐 Время запуска: {datetime.now().strftime('%H:%M:%S')}"
-            
-            await self.send_status_message(test_message)
+            # Не отправляем сообщение о запуске
             return True
             
         except Exception as e:
