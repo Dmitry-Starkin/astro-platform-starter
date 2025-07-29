@@ -1,51 +1,57 @@
-# Astro on Netlify Platform Starter
+# Crypto Price Monitor Bot
 
-[Live Demo](https://astro-platform-starter.netlify.app/)
+Telegram бот для мониторинга изменений цен криптовалют на бирже Bybit.
 
-A modern starter based on Astro.js, Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blob Store).
+## Функционал
 
-## Astro Commands
+- 📊 Парсинг всех криптопар с Bybit
+- ⏰ Мониторинг изменений цен через настраиваемые интервалы
+- 🔔 Уведомления в Telegram при значительных изменениях
+- 📈 Отслеживание как роста, так и падения цен
 
-All commands are run from the root of the project, from a terminal:
+## Установка
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## Deploying to Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-platform-starter)
-
-## Developing Locally
-
-| Prerequisites                                                                |
-| :--------------------------------------------------------------------------- |
-| [Node.js](https://nodejs.org/) v18.14+.                                      |
-| (optional) [nvm](https://github.com/nvm-sh/nvm) for Node version management. |
-
-1. Clone this repository, then run `npm install` in its root directory.
-
-2. For the starter to have full functionality locally (e.g. edge functions, blob store), please ensure you have an up-to-date version of Netlify CLI. Run:
-
-```
-npm install netlify-cli@latest -g
+1. Клонируйте репозиторий
+2. Установите зависимости:
+```bash
+pip install -r requirements.txt
 ```
 
-3. Link your local repository to the deployed Netlify site. This will ensure you're using the same runtime version for both local development and your deployed site.
+3. Создайте Telegram бота:
+   - Напишите @BotFather в Telegram
+   - Создайте нового бота командой `/newbot`
+   - Получите токен бота
+
+4. Получите Chat ID:
+   - Напишите боту любое сообщение
+   - Перейдите по ссылке: `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`
+   - Найдите ваш chat ID в ответе
+
+5. Настройте переменные окружения:
+```bash
+cp .env.example .env
+# Отредактируйте .env файл со своими данными
+```
+
+## Запуск
+
+```bash
+python main.py
+```
+
+## Настройки
+
+В файле `.env` можно настроить:
+- `MONITORING_INTERVAL` - интервал проверки в минутах (по умолчанию 3)
+- `PRICE_CHANGE_THRESHOLD` - порог изменения цены в % для уведомления (по умолчанию 3%)
+
+## Формат уведомлений
 
 ```
-netlify link
+🚀 РОСТ ЦЕНЫ
+Пара: BTCUSDT
+Изменение: +3.45%
+Период: 3 минуты
+Цена: $42,150.25
+Ссылка: https://www.bybit.com/trade/usdt/BTCUSDT
 ```
-
-4. Then, run the Astro.js development server via Netlify CLI:
-
-```
-netlify dev
-```
-
-If your browser doesn't navigate to the site automatically, visit [localhost:8888](http://localhost:8888).
