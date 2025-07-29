@@ -216,13 +216,7 @@ class CryptoPriceMonitor:
         print("🛑 Остановка мониторинга...")
         self.running = False
         
-        # Отправляем уведомление об остановке
-        if self.telegram_bot:
-            try:
-                stop_message = f"🛑 <b>Мониторинг остановлен</b>\n📡 Источник: {self.api_source}\n🕐 Время: {datetime.now().strftime('%H:%M:%S')}"
-                await self.telegram_bot.send_status_message(stop_message)
-            except:
-                pass  # Игнорируем ошибки при остановке
+        # Не отправляем уведомление об остановке
         
         print("✅ Мониторинг остановлен")
 

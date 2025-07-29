@@ -11,7 +11,7 @@ class Config:
     
     # Настройки мониторинга
     MONITORING_INTERVAL = int(os.getenv('MONITORING_INTERVAL', 3))  # минуты
-    PRICE_CHANGE_THRESHOLD = float(os.getenv('PRICE_CHANGE_THRESHOLD', 3.0))  # процент
+    PRICE_CHANGE_THRESHOLD = float(os.getenv('PRICE_CHANGE_THRESHOLD', 2.0))  # процент
     
     # Bybit API
     BYBIT_BASE_URL = os.getenv('BYBIT_BASE_URL', 'https://api.bybit.com')
