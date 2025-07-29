@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Optional
 
 from config import Config
-from crypto_api import BinanceAPI, CoinGeckoAPI, KrakenAPI  # Используем новые API
+from crypto_api import BybitAPI, BinanceAPI, CoinGeckoAPI, KrakenAPI  # Используем новые API
 from data_manager import DataManager
 from telegram_bot import CryptoTelegramBot
 
@@ -62,7 +62,19 @@ class CryptoPriceMonitor:
         """
         print("🔍 Поиск доступного криптовалютного API...")
         
-        # Пробуем Binance (приоритет)
+        # Пробуем Bybit (приоритет - linear контракты)
+        try:
+            async with BybitAPI() as api:
+                test_data = await api.get_all_tickers()
+                if test_data and len(test_data) > 0:
+                    self.crypto_api = BybitAPI
+                    self.api_source = "Bybit"
+                    print(f"✅ Используем Bybit API ({len(test_data)} USDT контрактов)")
+                    return
+        except Exception as e:
+            print(f"⚠️ Bybit недоступен: {e}")
+        
+        # Пробуем Binance
         try:
             async with BinanceAPI() as api:
                 test_data = await api.get_all_tickers()

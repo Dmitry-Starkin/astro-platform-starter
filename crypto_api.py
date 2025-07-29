@@ -5,6 +5,194 @@ from datetime import datetime
 from typing import Dict, List, Optional
 from config import Config
 
+class CoinCapAPI:
+    """
+    CoinCap API - простой и надежный источник данных без ограничений
+    """
+    def __init__(self):
+        self.base_url = "https://api.coincap.io/v2"
+        self.session = None
+    
+    async def __aenter__(self):
+        self.session = aiohttp.ClientSession()
+        return self
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.session:
+            await self.session.close()
+    
+    async def get_all_tickers(self) -> Optional[List[Dict]]:
+        """
+        Получает все криптовалюты с CoinCap
+        """
+        try:
+            # Получаем топ 2000 криптовалют (максимальный лимит)
+            url = f"{self.base_url}/assets"
+            params = {
+                'limit': 2000
+            }
+            
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (compatible; CryptoBot/1.0)',
+                'Accept': 'application/json'
+            }
+            
+            print(f"Запрос к CoinCap API: {url}")
+            print(f"Параметры: {params}")
+            
+            async with self.session.get(url, params=params, headers=headers) as response:
+                print(f"Статус ответа CoinCap: {response.status}")
+                
+                if response.status == 200:
+                    data = await response.json()
+                    assets = data.get('data', [])
+                    print(f"Получено {len(assets)} криптовалют с CoinCap")
+                    return self._process_coincap_data(assets)
+                else:
+                    response_text = await response.text()
+                    print(f"HTTP ошибка CoinCap {response.status}: {response_text[:300]}")
+                    return None
+                    
+        except Exception as e:
+            print(f"Ошибка при получении данных с CoinCap: {e}")
+            return None
+    
+    def _process_coincap_data(self, assets: List[Dict]) -> List[Dict]:
+        """
+        Обрабатывает данные криптовалют с CoinCap
+        """
+        processed = []
+        
+        for asset in assets:
+            try:
+                symbol = asset.get('symbol', '').upper()
+                name = asset.get('name', '')
+                
+                price_usd = asset.get('priceUsd')
+                change_percent_24hr = asset.get('changePercent24Hr')
+                
+                # Пропускаем активы без цены
+                if not price_usd or float(price_usd) == 0:
+                    continue
+                
+                # Создаем символ в стиле биржи
+                trading_symbol = f"{symbol}USDT"
+                
+                processed_asset = {
+                    'symbol': trading_symbol,
+                    'name': name,
+                    'price': float(price_usd),
+                    'change_24h_percent': round(float(change_percent_24hr or 0), 2),
+                    'volume_24h': float(asset.get('volumeUsd24Hr', 0)),
+                    'market_cap': float(asset.get('marketCapUsd', 0)),
+                    'timestamp': datetime.now().isoformat(),
+                    'exchange_url': f"https://coincap.io/assets/{asset.get('id', '')}"
+                }
+                
+                processed.append(processed_asset)
+                
+            except (ValueError, TypeError) as e:
+                print(f"Ошибка обработки актива CoinCap {asset}: {e}")
+                continue
+        
+        return processed
+
+class BybitAPI:
+    """
+    Bybit API - линейные контракты (фьючерсы USDT)
+    """
+    def __init__(self):
+        self.base_url = "https://api.bybit.com"
+        self.session = None
+    
+    async def __aenter__(self):
+        self.session = aiohttp.ClientSession()
+        return self
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.session:
+            await self.session.close()
+    
+    async def get_all_tickers(self) -> Optional[List[Dict]]:
+        """
+        Получает все тикеры линейных контрактов с Bybit
+        """
+        try:
+            # Используем эндпоинт для линейных контрактов (USDT фьючерсы)
+            url = f"{self.base_url}/v5/market/tickers"
+            params = {
+                'category': 'linear'  # Линейные контракты (USDT фьючерсы)
+            }
+            
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (compatible; CryptoBot/1.0)',
+                'Accept': 'application/json'
+            }
+            
+            print(f"Запрос к Bybit API: {url}")
+            print(f"Параметры: {params}")
+            
+            async with self.session.get(url, params=params, headers=headers) as response:
+                print(f"Статус ответа Bybit: {response.status}")
+                
+                if response.status == 200:
+                    data = await response.json()
+                    print(f"Получен ответ от Bybit: retCode={data.get('retCode')}")
+                    
+                    if data.get('retCode') == 0:
+                        tickers = data.get('result', {}).get('list', [])
+                        print(f"Получено {len(tickers)} контрактов с Bybit")
+                        return self._process_bybit_data(tickers)
+                    else:
+                        print(f"Ошибка API Bybit: {data.get('retMsg')}")
+                        return None
+                else:
+                    response_text = await response.text()
+                    print(f"HTTP ошибка Bybit {response.status}: {response_text[:300]}")
+                    return None
+                    
+        except Exception as e:
+            print(f"Ошибка при получении данных с Bybit: {e}")
+            return None
+    
+    def _process_bybit_data(self, tickers: List[Dict]) -> List[Dict]:
+        """
+        Обрабатывает данные тикеров с Bybit
+        """
+        processed = []
+        
+        for ticker in tickers:
+            try:
+                symbol = ticker.get('symbol', '')
+                # Фильтруем только USDT пары (линейные контракты)
+                if not symbol.endswith('USDT'):
+                    continue
+                
+                last_price = float(ticker.get('lastPrice', 0))
+                price_24h_pcnt = float(ticker.get('price24hPcnt', 0)) * 100  # Конвертируем в проценты
+                
+                # Пропускаем пары с нулевой ценой
+                if last_price == 0:
+                    continue
+                
+                processed_ticker = {
+                    'symbol': symbol,
+                    'name': symbol.replace('USDT', ''),  # Убираем USDT из названия
+                    'price': last_price,
+                    'change_24h_percent': round(price_24h_pcnt, 2),
+                    'volume_24h': float(ticker.get('volume24h', 0)),
+                    'timestamp': datetime.now().isoformat(),
+                    'exchange_url': f"https://www.bybit.com/trade/usdt/{symbol}"
+                }
+                
+                processed.append(processed_ticker)
+                
+            except (ValueError, TypeError) as e:
+                print(f"Ошибка обработки тикера Bybit {ticker}: {e}")
+                continue
+        
+        return processed
+
 class BinanceAPI:
     """
     Binance API - быстрый и надежный источник данных
@@ -284,8 +472,32 @@ async def test_all_crypto_apis():
     """Тестовая функция для проверки работы всех API"""
     print("🔄 Тестируем все доступные криптовалютные API...")
     
-    # 1. Пробуем Binance (новый приоритетный)
-    print("\n1️⃣ Тестируем Binance API...")
+    # 1. Пробуем CoinCap (новый приоритетный - без ограничений)
+    print("\n1️⃣ Тестируем CoinCap API...")
+    async with CoinCapAPI() as api:
+        tickers = await api.get_all_tickers()
+        
+        if tickers:
+            print(f"✅ CoinCap: получено {len(tickers)} криптовалют")
+            print("Топ 5 по капитализации:")
+            for ticker in tickers[:5]:
+                print(f"  {ticker['symbol']}: ${ticker['price']:.4f} ({ticker['change_24h_percent']:+.2f}%)")
+            return tickers, "CoinCap"
+    
+    # 2. Пробуем Bybit
+    print("\n2️⃣ CoinCap недоступен, тестируем Bybit API (linear контракты)...")
+    async with BybitAPI() as api:
+        tickers = await api.get_all_tickers()
+        
+        if tickers:
+            print(f"✅ Bybit: получено {len(tickers)} USDT контрактов")
+            print("Топ 5 контрактов:")
+            for ticker in tickers[:5]:
+                print(f"  {ticker['symbol']}: ${ticker['price']:.4f} ({ticker['change_24h_percent']:+.2f}%)")
+            return tickers, "Bybit"
+    
+    # 3. Пробуем Binance
+    print("\n3️⃣ Bybit недоступен, тестируем Binance API...")
     async with BinanceAPI() as api:
         tickers = await api.get_all_tickers()
         
@@ -296,8 +508,8 @@ async def test_all_crypto_apis():
                 print(f"  {ticker['symbol']}: ${ticker['price']:.4f} ({ticker['change_24h_percent']:+.2f}%)")
             return tickers, "Binance"
     
-    # 2. Пробуем CoinGecko
-    print("\n2️⃣ Binance недоступен, тестируем CoinGecko API...")
+    # 4. Пробуем CoinGecko
+    print("\n4️⃣ Binance недоступен, тестируем CoinGecko API...")
     async with CoinGeckoAPI() as api:
         tickers = await api.get_all_tickers()
         
@@ -308,8 +520,8 @@ async def test_all_crypto_apis():
                 print(f"  {ticker['symbol']}: ${ticker['price']:.4f} ({ticker['change_24h_percent']:+.2f}%)")
             return tickers, "CoinGecko"
     
-    # 3. Пробуем Kraken
-    print("\n3️⃣ CoinGecko недоступен, тестируем Kraken API...")
+    # 5. Пробуем Kraken
+    print("\n5️⃣ CoinGecko недоступен, тестируем Kraken API...")
     async with KrakenAPI() as api:
         tickers = await api.get_all_tickers()
         
