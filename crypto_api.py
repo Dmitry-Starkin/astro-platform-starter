@@ -101,23 +101,126 @@ class BybitAPI:
         
         return processed
 
-# Функция для тестирования Bybit API
-async def test_bybit_api():
-    """Тестовая функция для проверки работы Bybit API"""
-    print("🔄 Тестируем Bybit API...")
+class CoinGeckoAPI:
+    """
+    CoinGecko API - резервный источник данных для демонстрации
+    """
+    def __init__(self):
+        self.base_url = "https://api.coingecko.com/api/v3"
+        self.session = None
     
+    async def __aenter__(self):
+        self.session = aiohttp.ClientSession()
+        return self
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.session:
+            await self.session.close()
+    
+    async def get_all_tickers(self) -> Optional[List[Dict]]:
+        """
+        Получает топ криптовалют с CoinGecko
+        """
+        try:
+            # Получаем топ 50 криптовалют для быстрой демонстрации
+            url = f"{self.base_url}/coins/markets"
+            params = {
+                'vs_currency': 'usd',
+                'order': 'market_cap_desc',
+                'per_page': 50,
+                'page': 1,
+                'sparkline': 'false',
+                'price_change_percentage': '24h'
+            }
+            
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (compatible; CryptoBot/1.0)',
+                'Accept': 'application/json'
+            }
+            
+            print(f"Запрос к CoinGecko API: {url}")
+            
+            async with self.session.get(url, params=params, headers=headers) as response:
+                print(f"Статус ответа CoinGecko: {response.status}")
+                
+                if response.status == 200:
+                    data = await response.json()
+                    print(f"Получено {len(data)} криптовалют с CoinGecko")
+                    return self._process_coingecko_data(data)
+                else:
+                    response_text = await response.text()
+                    print(f"HTTP ошибка CoinGecko {response.status}: {response_text[:300]}")
+                    return None
+                    
+        except Exception as e:
+            print(f"Ошибка при получении данных с CoinGecko: {e}")
+            return None
+    
+    def _process_coingecko_data(self, coins: List[Dict]) -> List[Dict]:
+        """
+        Обрабатывает данные криптовалют с CoinGecko
+        """
+        processed = []
+        
+        for coin in coins:
+            try:
+                symbol = coin.get('symbol', '').upper()
+                name = coin.get('name', '')
+                
+                current_price = coin.get('current_price')
+                price_change_24h = coin.get('price_change_percentage_24h')
+                
+                # Пропускаем монеты без цены
+                if current_price is None or current_price == 0:
+                    continue
+                
+                # Создаем символ в стиле биржи (например, BTCUSDT)
+                trading_symbol = f"{symbol}USDT"
+                
+                processed_coin = {
+                    'symbol': trading_symbol,
+                    'name': name,
+                    'price': float(current_price),
+                    'change_24h_percent': round(float(price_change_24h or 0), 2),
+                    'volume_24h': float(coin.get('total_volume', 0)),
+                    'market_cap': float(coin.get('market_cap', 0)),
+                    'timestamp': datetime.now().isoformat(),
+                    'exchange_url': f"https://www.coingecko.com/en/coins/{coin.get('id', '')}"
+                }
+                
+                processed.append(processed_coin)
+                
+            except (ValueError, TypeError) as e:
+                print(f"Ошибка обработки монеты CoinGecko {coin}: {e}")
+                continue
+        
+        return processed
+
+# Функция для тестирования API
+async def test_apis():
+    """Тестовая функция для проверки работы API"""
+    print("🔄 Тестируем API...")
+    
+    # 1. Пробуем Bybit
+    print("\n1️⃣ Тестируем Bybit API...")
     async with BybitAPI() as api:
         tickers = await api.get_all_tickers()
         
         if tickers:
             print(f"✅ Bybit: получено {len(tickers)} USDT контрактов")
-            print("Топ 5 контрактов:")
-            for ticker in tickers[:5]:
-                print(f"  {ticker['symbol']}: ${ticker['price']:.4f} ({ticker['change_24h_percent']:+.2f}%)")
             return tickers, "Bybit"
-        else:
-            print("❌ Bybit API недоступен")
-            return None, None
+    
+    # 2. Пробуем CoinGecko как резерв
+    print("\n2️⃣ Bybit недоступен, тестируем CoinGecko API...")
+    async with CoinGeckoAPI() as api:
+        tickers = await api.get_all_tickers()
+        
+        if tickers:
+            print(f"✅ CoinGecko: получено {len(tickers)} криптовалют")
+            return tickers, "CoinGecko"
+    
+    print("❌ Все API недоступны")
+    return None, None
 
 if __name__ == "__main__":
-    asyncio.run(test_bybit_api())
+    asyncio.run(test_apis())

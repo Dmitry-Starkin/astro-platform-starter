@@ -1,0 +1,506 @@
+{
+  "timestamp": "2025-07-29T16:29:04.738505",
+  "data": [
+    {
+      "symbol": "BTCUSDT",
+      "name": "Bitcoin",
+      "price": 117377.0,
+      "change_24h_percent": -0.72,
+      "volume_24h": 42806877123.0,
+      "market_cap": 2335621372482.0,
+      "timestamp": "2025-07-29T16:29:04.738200",
+      "exchange_url": "https://www.coingecko.com/en/coins/bitcoin"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "name": "Ethereum",
+      "price": 3750.49,
+      "change_24h_percent": -1.55,
+      "volume_24h": 33520809426.0,
+      "market_cap": 452699925124.0,
+      "timestamp": "2025-07-29T16:29:04.738207",
+      "exchange_url": "https://www.coingecko.com/en/coins/ethereum"
+    },
+    {
+      "symbol": "XRPUSDT",
+      "name": "XRP",
+      "price": 3.08,
+      "change_24h_percent": -2.8,
+      "volume_24h": 6713356382.0,
+      "market_cap": 182174593160.0,
+      "timestamp": "2025-07-29T16:29:04.738209",
+      "exchange_url": "https://www.coingecko.com/en/coins/ripple"
+    },
+    {
+      "symbol": "USDTUSDT",
+      "name": "Tether",
+      "price": 0.999886,
+      "change_24h_percent": -0.0,
+      "volume_24h": 91134969191.0,
+      "market_cap": 163640431198.0,
+      "timestamp": "2025-07-29T16:29:04.738211",
+      "exchange_url": "https://www.coingecko.com/en/coins/tether"
+    },
+    {
+      "symbol": "BNBUSDT",
+      "name": "BNB",
+      "price": 804.52,
+      "change_24h_percent": -3.82,
+      "volume_24h": 2129986135.0,
+      "market_cap": 112048856888.0,
+      "timestamp": "2025-07-29T16:29:04.738213",
+      "exchange_url": "https://www.coingecko.com/en/coins/binancecoin"
+    },
+    {
+      "symbol": "SOLUSDT",
+      "name": "Solana",
+      "price": 179.64,
+      "change_24h_percent": -3.85,
+      "volume_24h": 6324339374.0,
+      "market_cap": 96629315981.0,
+      "timestamp": "2025-07-29T16:29:04.738214",
+      "exchange_url": "https://www.coingecko.com/en/coins/solana"
+    },
+    {
+      "symbol": "USDCUSDT",
+      "name": "USDC",
+      "price": 0.999779,
+      "change_24h_percent": 0.0,
+      "volume_24h": 14513702685.0,
+      "market_cap": 63867100514.0,
+      "timestamp": "2025-07-29T16:29:04.738216",
+      "exchange_url": "https://www.coingecko.com/en/coins/usd-coin"
+    },
+    {
+      "symbol": "STETHUSDT",
+      "name": "Lido Staked Ether",
+      "price": 3744.35,
+      "change_24h_percent": -1.58,
+      "volume_24h": 87079791.0,
+      "market_cap": 33620033490.0,
+      "timestamp": "2025-07-29T16:29:04.738218",
+      "exchange_url": "https://www.coingecko.com/en/coins/staked-ether"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "name": "Dogecoin",
+      "price": 0.220695,
+      "change_24h_percent": -4.97,
+      "volume_24h": 2440490164.0,
+      "market_cap": 33151598085.0,
+      "timestamp": "2025-07-29T16:29:04.738220",
+      "exchange_url": "https://www.coingecko.com/en/coins/dogecoin"
+    },
+    {
+      "symbol": "TRXUSDT",
+      "name": "TRON",
+      "price": 0.336463,
+      "change_24h_percent": 3.79,
+      "volume_24h": 3137478502.0,
+      "market_cap": 31867196877.0,
+      "timestamp": "2025-07-29T16:29:04.738221",
+      "exchange_url": "https://www.coingecko.com/en/coins/tron"
+    },
+    {
+      "symbol": "ADAUSDT",
+      "name": "Cardano",
+      "price": 0.775643,
+      "change_24h_percent": -3.71,
+      "volume_24h": 1360104676.0,
+      "market_cap": 28057310945.0,
+      "timestamp": "2025-07-29T16:29:04.738222",
+      "exchange_url": "https://www.coingecko.com/en/coins/cardano"
+    },
+    {
+      "symbol": "WBTCUSDT",
+      "name": "Wrapped Bitcoin",
+      "price": 117283.0,
+      "change_24h_percent": -0.58,
+      "volume_24h": 172469284.0,
+      "market_cap": 14883529412.0,
+      "timestamp": "2025-07-29T16:29:04.738224",
+      "exchange_url": "https://www.coingecko.com/en/coins/wrapped-bitcoin"
+    },
+    {
+      "symbol": "WSTETHUSDT",
+      "name": "Wrapped stETH",
+      "price": 4537.41,
+      "change_24h_percent": -1.47,
+      "volume_24h": 101070994.0,
+      "market_cap": 14821981784.0,
+      "timestamp": "2025-07-29T16:29:04.738225",
+      "exchange_url": "https://www.coingecko.com/en/coins/wrapped-steth"
+    },
+    {
+      "symbol": "HYPEUSDT",
+      "name": "Hyperliquid",
+      "price": 43.33,
+      "change_24h_percent": -4.97,
+      "volume_24h": 588877185.0,
+      "market_cap": 14453559469.0,
+      "timestamp": "2025-07-29T16:29:04.738227",
+      "exchange_url": "https://www.coingecko.com/en/coins/hyperliquid"
+    },
+    {
+      "symbol": "SUIUSDT",
+      "name": "Sui",
+      "price": 3.79,
+      "change_24h_percent": -6.44,
+      "volume_24h": 2040883934.0,
+      "market_cap": 13083123970.0,
+      "timestamp": "2025-07-29T16:29:04.738228",
+      "exchange_url": "https://www.coingecko.com/en/coins/sui"
+    },
+    {
+      "symbol": "XLMUSDT",
+      "name": "Stellar",
+      "price": 0.414775,
+      "change_24h_percent": -2.14,
+      "volume_24h": 372388131.0,
+      "market_cap": 12936269592.0,
+      "timestamp": "2025-07-29T16:29:04.738229",
+      "exchange_url": "https://www.coingecko.com/en/coins/stellar"
+    },
+    {
+      "symbol": "WBETHUSDT",
+      "name": "Wrapped Beacon ETH",
+      "price": 4030.23,
+      "change_24h_percent": -1.5,
+      "volume_24h": 42124017.0,
+      "market_cap": 11947700913.0,
+      "timestamp": "2025-07-29T16:29:04.738232",
+      "exchange_url": "https://www.coingecko.com/en/coins/wrapped-beacon-eth"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "name": "Chainlink",
+      "price": 17.58,
+      "change_24h_percent": -4.4,
+      "volume_24h": 681365637.0,
+      "market_cap": 11922749063.0,
+      "timestamp": "2025-07-29T16:29:04.738234",
+      "exchange_url": "https://www.coingecko.com/en/coins/chainlink"
+    },
+    {
+      "symbol": "BCHUSDT",
+      "name": "Bitcoin Cash",
+      "price": 566.02,
+      "change_24h_percent": -3.39,
+      "volume_24h": 369886633.0,
+      "market_cap": 11266405584.0,
+      "timestamp": "2025-07-29T16:29:04.738235",
+      "exchange_url": "https://www.coingecko.com/en/coins/bitcoin-cash"
+    },
+    {
+      "symbol": "HBARUSDT",
+      "name": "Hedera",
+      "price": 0.260556,
+      "change_24h_percent": -4.18,
+      "volume_24h": 488886793.0,
+      "market_cap": 11051546529.0,
+      "timestamp": "2025-07-29T16:29:04.738237",
+      "exchange_url": "https://www.coingecko.com/en/coins/hedera-hashgraph"
+    },
+    {
+      "symbol": "WEETHUSDT",
+      "name": "Wrapped eETH",
+      "price": 4021.11,
+      "change_24h_percent": -1.35,
+      "volume_24h": 49677798.0,
+      "market_cap": 10662445062.0,
+      "timestamp": "2025-07-29T16:29:04.738238",
+      "exchange_url": "https://www.coingecko.com/en/coins/wrapped-eeth"
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "name": "Avalanche",
+      "price": 24.22,
+      "change_24h_percent": -7.11,
+      "volume_24h": 846085999.0,
+      "market_cap": 10226039960.0,
+      "timestamp": "2025-07-29T16:29:04.738240",
+      "exchange_url": "https://www.coingecko.com/en/coins/avalanche-2"
+    },
+    {
+      "symbol": "WETHUSDT",
+      "name": "WETH",
+      "price": 3752.06,
+      "change_24h_percent": -1.61,
+      "volume_24h": 798548896.0,
+      "market_cap": 8471051144.0,
+      "timestamp": "2025-07-29T16:29:04.738241",
+      "exchange_url": "https://www.coingecko.com/en/coins/weth"
+    },
+    {
+      "symbol": "LEOUSDT",
+      "name": "LEO Token",
+      "price": 8.96,
+      "change_24h_percent": 0.03,
+      "volume_24h": 3153604.0,
+      "market_cap": 8272156504.0,
+      "timestamp": "2025-07-29T16:29:04.738243",
+      "exchange_url": "https://www.coingecko.com/en/coins/leo-token"
+    },
+    {
+      "symbol": "LTCUSDT",
+      "name": "Litecoin",
+      "price": 107.58,
+      "change_24h_percent": -2.56,
+      "volume_24h": 606739100.0,
+      "market_cap": 8187892448.0,
+      "timestamp": "2025-07-29T16:29:04.738244",
+      "exchange_url": "https://www.coingecko.com/en/coins/litecoin"
+    },
+    {
+      "symbol": "TONUSDT",
+      "name": "Toncoin",
+      "price": 3.26,
+      "change_24h_percent": -1.27,
+      "volume_24h": 215163344.0,
+      "market_cap": 7869572870.0,
+      "timestamp": "2025-07-29T16:29:04.738245",
+      "exchange_url": "https://www.coingecko.com/en/coins/the-open-network"
+    },
+    {
+      "symbol": "SHIBUSDT",
+      "name": "Shiba Inu",
+      "price": 1.302e-05,
+      "change_24h_percent": -4.32,
+      "volume_24h": 243041377.0,
+      "market_cap": 7672071174.0,
+      "timestamp": "2025-07-29T16:29:04.738246",
+      "exchange_url": "https://www.coingecko.com/en/coins/shiba-inu"
+    },
+    {
+      "symbol": "USDEUSDT",
+      "name": "Ethena USDe",
+      "price": 1.0,
+      "change_24h_percent": -0.09,
+      "volume_24h": 261974093.0,
+      "market_cap": 7657329847.0,
+      "timestamp": "2025-07-29T16:29:04.738248",
+      "exchange_url": "https://www.coingecko.com/en/coins/ethena-usde"
+    },
+    {
+      "symbol": "USDSUSDT",
+      "name": "USDS",
+      "price": 0.999518,
+      "change_24h_percent": -0.0,
+      "volume_24h": 6842753.0,
+      "market_cap": 7527291066.0,
+      "timestamp": "2025-07-29T16:29:04.738249",
+      "exchange_url": "https://www.coingecko.com/en/coins/usds"
+    },
+    {
+      "symbol": "BSC-USDUSDT",
+      "name": "Binance Bridged USDT (BNB Smart Chain)",
+      "price": 0.99818,
+      "change_24h_percent": -0.12,
+      "volume_24h": 2976560723.0,
+      "market_cap": 6778677194.0,
+      "timestamp": "2025-07-29T16:29:04.738251",
+      "exchange_url": "https://www.coingecko.com/en/coins/binance-bridged-usdt-bnb-smart-chain"
+    },
+    {
+      "symbol": "WBTUSDT",
+      "name": "WhiteBIT Coin",
+      "price": 43.92,
+      "change_24h_percent": -0.5,
+      "volume_24h": 41046687.0,
+      "market_cap": 6329521463.0,
+      "timestamp": "2025-07-29T16:29:04.738252",
+      "exchange_url": "https://www.coingecko.com/en/coins/whitebit"
+    },
+    {
+      "symbol": "CBBTCUSDT",
+      "name": "Coinbase Wrapped BTC",
+      "price": 117363.0,
+      "change_24h_percent": -0.71,
+      "volume_24h": 448850358.0,
+      "market_cap": 6325050602.0,
+      "timestamp": "2025-07-29T16:29:04.738254",
+      "exchange_url": "https://www.coingecko.com/en/coins/coinbase-wrapped-btc"
+    },
+    {
+      "symbol": "UNIUSDT",
+      "name": "Uniswap",
+      "price": 10.09,
+      "change_24h_percent": -4.44,
+      "volume_24h": 532926731.0,
+      "market_cap": 6060309103.0,
+      "timestamp": "2025-07-29T16:29:04.738255",
+      "exchange_url": "https://www.coingecko.com/en/coins/uniswap"
+    },
+    {
+      "symbol": "DOTUSDT",
+      "name": "Polkadot",
+      "price": 3.88,
+      "change_24h_percent": -4.12,
+      "volume_24h": 309985514.0,
+      "market_cap": 5907428430.0,
+      "timestamp": "2025-07-29T16:29:04.738256",
+      "exchange_url": "https://www.coingecko.com/en/coins/polkadot"
+    },
+    {
+      "symbol": "XMRUSDT",
+      "name": "Monero",
+      "price": 316.14,
+      "change_24h_percent": -1.89,
+      "volume_24h": 138687648.0,
+      "market_cap": 5831660278.0,
+      "timestamp": "2025-07-29T16:29:04.738258",
+      "exchange_url": "https://www.coingecko.com/en/coins/monero"
+    },
+    {
+      "symbol": "BGBUSDT",
+      "name": "Bitget Token",
+      "price": 4.5,
+      "change_24h_percent": -3.07,
+      "volume_24h": 138732106.0,
+      "market_cap": 5125916769.0,
+      "timestamp": "2025-07-29T16:29:04.738259",
+      "exchange_url": "https://www.coingecko.com/en/coins/bitget-token"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "name": "Pepe",
+      "price": 1.143e-05,
+      "change_24h_percent": -6.54,
+      "volume_24h": 916700451.0,
+      "market_cap": 4809285987.0,
+      "timestamp": "2025-07-29T16:29:04.738261",
+      "exchange_url": "https://www.coingecko.com/en/coins/pepe"
+    },
+    {
+      "symbol": "CROUSDT",
+      "name": "Cronos",
+      "price": 0.145077,
+      "change_24h_percent": 3.21,
+      "volume_24h": 114762561.0,
+      "market_cap": 4680088549.0,
+      "timestamp": "2025-07-29T16:29:04.738262",
+      "exchange_url": "https://www.coingecko.com/en/coins/crypto-com-chain"
+    },
+    {
+      "symbol": "SUSDEUSDT",
+      "name": "Ethena Staked USDe",
+      "price": 1.19,
+      "change_24h_percent": 0.02,
+      "volume_24h": 45458080.0,
+      "market_cap": 4377070603.0,
+      "timestamp": "2025-07-29T16:29:04.738264",
+      "exchange_url": "https://www.coingecko.com/en/coins/ethena-staked-usde"
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "name": "Aave",
+      "price": 281.94,
+      "change_24h_percent": -3.45,
+      "volume_24h": 422219796.0,
+      "market_cap": 4286893182.0,
+      "timestamp": "2025-07-29T16:29:04.738266",
+      "exchange_url": "https://www.coingecko.com/en/coins/aave"
+    },
+    {
+      "symbol": "DAIUSDT",
+      "name": "Dai",
+      "price": 0.999912,
+      "change_24h_percent": 0.03,
+      "volume_24h": 90641559.0,
+      "market_cap": 3746979789.0,
+      "timestamp": "2025-07-29T16:29:04.738267",
+      "exchange_url": "https://www.coingecko.com/en/coins/dai"
+    },
+    {
+      "symbol": "TAOUSDT",
+      "name": "Bittensor",
+      "price": 390.96,
+      "change_24h_percent": -4.65,
+      "volume_24h": 145063901.0,
+      "market_cap": 3718892733.0,
+      "timestamp": "2025-07-29T16:29:04.738269",
+      "exchange_url": "https://www.coingecko.com/en/coins/bittensor"
+    },
+    {
+      "symbol": "ENAUSDT",
+      "name": "Ethena",
+      "price": 0.57271,
+      "change_24h_percent": -12.82,
+      "volume_24h": 1120388189.0,
+      "market_cap": 3644923045.0,
+      "timestamp": "2025-07-29T16:29:04.738270",
+      "exchange_url": "https://www.coingecko.com/en/coins/ethena"
+    },
+    {
+      "symbol": "NEARUSDT",
+      "name": "NEAR Protocol",
+      "price": 2.69,
+      "change_24h_percent": -4.51,
+      "volume_24h": 244518597.0,
+      "market_cap": 3338115666.0,
+      "timestamp": "2025-07-29T16:29:04.738272",
+      "exchange_url": "https://www.coingecko.com/en/coins/near"
+    },
+    {
+      "symbol": "PIUSDT",
+      "name": "Pi Network",
+      "price": 0.429438,
+      "change_24h_percent": -3.54,
+      "volume_24h": 76606542.0,
+      "market_cap": 3323825333.0,
+      "timestamp": "2025-07-29T16:29:04.738273",
+      "exchange_url": "https://www.coingecko.com/en/coins/pi-network"
+    },
+    {
+      "symbol": "ETCUSDT",
+      "name": "Ethereum Classic",
+      "price": 21.7,
+      "change_24h_percent": -1.87,
+      "volume_24h": 113529636.0,
+      "market_cap": 3317819442.0,
+      "timestamp": "2025-07-29T16:29:04.738282",
+      "exchange_url": "https://www.coingecko.com/en/coins/ethereum-classic"
+    },
+    {
+      "symbol": "ONDOUSDT",
+      "name": "Ondo",
+      "price": 0.95386,
+      "change_24h_percent": -5.44,
+      "volume_24h": 227279694.0,
+      "market_cap": 3013082764.0,
+      "timestamp": "2025-07-29T16:29:04.738284",
+      "exchange_url": "https://www.coingecko.com/en/coins/ondo-finance"
+    },
+    {
+      "symbol": "ICPUSDT",
+      "name": "Internet Computer",
+      "price": 5.43,
+      "change_24h_percent": -3.82,
+      "volume_24h": 74147144.0,
+      "market_cap": 2912056796.0,
+      "timestamp": "2025-07-29T16:29:04.738286",
+      "exchange_url": "https://www.coingecko.com/en/coins/internet-computer"
+    },
+    {
+      "symbol": "OKBUSDT",
+      "name": "OKB",
+      "price": 48.42,
+      "change_24h_percent": -0.71,
+      "volume_24h": 36386194.0,
+      "market_cap": 2905777628.0,
+      "timestamp": "2025-07-29T16:29:04.738287",
+      "exchange_url": "https://www.coingecko.com/en/coins/okb"
+    },
+    {
+      "symbol": "JITOSOLUSDT",
+      "name": "Jito Staked SOL",
+      "price": 219.13,
+      "change_24h_percent": -3.95,
+      "volume_24h": 25399837.0,
+      "market_cap": 2864918388.0,
+      "timestamp": "2025-07-29T16:29:04.738289",
+      "exchange_url": "https://www.coingecko.com/en/coins/jito-staked-sol"
+    }
+  ],
+  "count": 50
+}
